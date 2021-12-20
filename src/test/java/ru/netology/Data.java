@@ -34,6 +34,7 @@ public class Data {
                 .then() // "тогда ожидаем"
                 .statusCode(200); // код 200 OK
     }
+
     @Value
     public static class User {
         String login;
@@ -52,11 +53,10 @@ public class Data {
     }
 
     public static User createUser(String status) {
-        User infoUser = new User(randomLogin(), randomPassword(),status);
+        User infoUser = new User(randomLogin(), randomPassword(), status);
         setUpAll(infoUser);
         return infoUser;
     }
-
 
 
 }
