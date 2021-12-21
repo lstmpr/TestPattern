@@ -23,8 +23,7 @@ public class Data {
             .log(LogDetail.ALL)
             .build();
 
-    @BeforeAll
-    static void setUpAll(User user) {
+    static void sendRequest(User user) {
         // сам запрос
         given() // "дано"
                 .spec(requestSpec) // указываем, какую спецификацию используем
@@ -51,11 +50,15 @@ public class Data {
         String password = faker.internet().password();
         return password;
     }
+    public static User withoutInfoUser(String status) {
+        User infoUser = new User(randomLogin(), randomPassword(), status);
+        return infoUser;
+    }
 
     public static User createUser(String status) {
-        User infoUser = new User(randomLogin(), randomPassword(), status);
-        setUpAll(infoUser);
-        return infoUser;
+        User registeredUser = withoutInfoUser(status);
+        sendRequest(registeredUser);
+        return registeredUser;
     }
 
 

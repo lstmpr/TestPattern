@@ -41,13 +41,36 @@ public class AuthorizationTest {
     @Test
     public void shouldNotRegistered() {
 
-        User withoutInfoUser = new User(randomLogin(), randomPassword(), "active");
+        User withoutInfoUser = withoutInfoUser("active");
 
         $("[name='login']").setValue(withoutInfoUser.getLogin());
         $("[name='password']").setValue(withoutInfoUser.getPassword());
         $(".button").click();
         $(byText("Неверно указан логин или пароль")).shouldBe(Condition.visible);
+    }
 
+    @Test
+    public void shouldWithWrongLogin() {
+
+        User withoutInfoUser = withoutInfoUser("active");
+        var wrongLogin = randomLogin();
+
+        $("[name='login']").setValue(wrongLogin);
+        $("[name='password']").setValue(withoutInfoUser.getPassword());
+        $(".button").click();
+        $(byText("Неверно указан логин или пароль")).shouldBe(Condition.visible);
+    }
+
+    @Test
+    public void shouldWithWrongPassword() {
+
+        User withoutInfoUser = withoutInfoUser("active");
+        var wrongPassword = randomPassword();
+
+        $("[name='login']").setValue(wrongPassword);
+        $("[name='password']").setValue(withoutInfoUser.getPassword());
+        $(".button").click();
+        $(byText("Неверно указан логин или пароль")).shouldBe(Condition.visible);
     }
 
 
